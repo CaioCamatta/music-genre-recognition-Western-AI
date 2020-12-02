@@ -7,7 +7,9 @@ from werkzeug.utils import secure_filename
 def index():
     return render_template("public/index.html")
 
-app.config["UPLOADS"]= "/Users/renayrahman/Documents/GitHub/music-genre-recognition-Western-AI/app/static/css/file/uploads"
+dirname = os.path.dirname(__file__)
+uploads_folder = os.path.join(dirname, 'static/uploads')
+app.config["UPLOADS"]= uploads_folder
 app.config["ALLOWED_EXTENSIONS"]= ["MP3"]
 
 def allowed_mp3(filename):

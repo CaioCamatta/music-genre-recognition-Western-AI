@@ -7,7 +7,7 @@ class Config(object):
     DB_USERNAME = "admin"
     DB_PASSWORD = "example"
 
-    UPLOADS = "/home/username/app/app/static/images/uploads"
+    UPLOADS = "app/static/uploads"
 
     SESSION_COOKIE_SECURE = True
 
@@ -21,7 +21,7 @@ class DevelopmentConfig(Config):
     DB_USERNAME = "admin"
     DB_PASSWORD = "example"
 
-    UPLOADS = "/Users/renayrahman/Documents/GitHub/music-genre-recognition-Western-AI/app/static/css/file/uploads"
+    UPLOADS = "app/static/uploads"
 
     SESSION_COOKIE_SECURE = False
 
