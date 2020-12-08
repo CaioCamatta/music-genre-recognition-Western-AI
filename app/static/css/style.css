@@ -24,3 +24,21 @@ h2 {
   font-size: 1.2rem;
   font-weight: 600;
 }
+
+.footer {
+  background-color: #9472e4 !important;
+  margin-top: 5rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  color: white;
+}
+
+.footer p {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.footer a {
+  color: white;
+  text-decoration: underline;
+}
