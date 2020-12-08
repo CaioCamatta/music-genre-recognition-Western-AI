@@ -1,3 +1,26 @@
 body {
-    background-color: beige;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+h1 {
+  font-weight: 800;
+  font-size: 3rem;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  padding-top: 3.2rem;
+  color: #9472e4;
+}
+
+.subtitle-sm {
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
