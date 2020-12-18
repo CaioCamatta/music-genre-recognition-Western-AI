@@ -41,7 +41,7 @@ endblock %} {% block main %}
     {% if not error %} {% if input %}
     <p>
       According to our model, your song “{{filename}}” is a
-      <b>{{ prediction }}</b> song!
+      <b id="predictedClass">{{ prediction }}</b> song!
       <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
       <script>
         var tensorflow = (async function () {
@@ -67,6 +67,7 @@ endblock %} {% block main %}
                   .argMax()
                   .dataSync()[0];
                 console.log(classes[prediction]);
+                $("#predictedClass").html(classes[prediction]);
               })();
       </script>
     </p>
