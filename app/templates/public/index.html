@@ -6,8 +6,8 @@ endblock %} {% block main %}
     <h4 class="subtitle-sm">
       By Ben, Caio, Patrick, Renay, Walter @ Western University
     </h4>
-    <h3 class="subtitle">A <a href="#">WesternAI</a> Project - Fall 2020</h3>
-    <button>Repository</button>
+    <h3 class="subtitle pb-2">A <a href="https://www.westernuai.com/" class="light-purple">WesternAI</a> Project - Fall 2020</h3>
+    <a href="https://github.com/CaioCamatta/music-genre-recognition-Western-AI" class="repo-btn mt-3"><i class="fab fa-github"></i> Repository</a>
   </div>
   <div>
     <h2>The Model</h2>
@@ -16,23 +16,26 @@ endblock %} {% block main %}
       accuracy.
     </p>
     <form action="" method="POST" enctype="multipart/form-data">
-      <div class="form-group">
-        <label>Select File</label>
-        <div class="custom-file">
+      <div class="form-group mb-1">
+        <label for="audio_file" class="btn browser-btn"">Browse</label> 
+        <span id="selected_filename" class="ml-3">No file selected</span>
+        <div class="">
           <input
             type="file"
-            class="custom-file-input"
             name="audio_file"
             id="audio_file"
             accept="audio/*"
           />
-          <label class="custom-file-label" for="image"
-            >Select .MP3 or .WAV file...</label
-          >
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary">Upload file</button>
+      <button type="submit" class="btn upload-btn mb-3">Upload file</button>
+      <span class="ml-2 d-inline-block upload-label">Upload an .MP3 or .WAV to see its classification!</span>
+      <script>
+        $('#audio_file').change(function() {
+          $('#selected_filename').text($('#audio_file')[0].files[0].name);
+        });
+      </script>
     </form>
     <td></td>
     {% if not error %} {% if input %}
@@ -91,24 +94,24 @@ endblock %} {% block main %}
       work collaboratively with 3-5 other members of Western AI to tackle an AI
       project of their choosing.
     </p>
-    <div class="row">
-      <div class="col">
-        <h4>1. Lessons</h4>
+    <div class="row col-md-10 offset-md-1 mt-5">
+      <div class="col-sm-4">
+        <h4 class="light-purple">1. Lessons</h4>
         <p>
           First, the team worked through a Lesson Plan involving Neural
           Networks, Numpy, Pandas, Keras and Flask.
         </p>
       </div>
-      <div class="col">
-        <h4>2. Model Creation</h4>
+      <div class="col-sm-4">
+        <h4 class="light-purple">2. Model Creation</h4>
         <p>
           Once we decided on the project topic, we built and improved models
           until we had a satisfactory one. Our initial approach was a KNN model,
           but we later saw that Neural Networks worked better.
         </p>
       </div>
-      <div class="col">
-        <h4>3. Web App</h4>
+      <div class="col-sm-4">
+        <h4 class="light-purple">3. Web App</h4>
         <p>
           Lastly, we created this website to display our model and allow other
           people to use it!
@@ -120,40 +123,52 @@ endblock %} {% block main %}
     <h2>The Team</h2>
     <div class="row">
       <div class="col">
-        <img />
-        <h4>Person A</h4>
-        <p>Program</p>
-        <p>Year</p>
-        <p>Role</p>
-        <a href="#">GitHub</a>
-        <a href="#">Linkedin</a>
+        <div class="text-center">
+          <div alt="Person" class="mx-auto rounded-circle profile-image mb-3" style="
+          background-image: url('/static/imgs/profile-default.jpg');"></div>
+          <h4>Benjamin Tilden</h4>
+          <p class="my-1">CS + minor SE</p>
+          <p class="my-1">Class of '21</p>
+          <p class="my-1 mb-2">Developer</p>
+          <a href="#" class="profile-icon mr-2"><i class="fab fa-github"></i></a>
+          <a href="#" class="profile-icon"><i class="fab fa-linkedin"></i></a>
+        </div>
       </div>
       <div class="col">
-        <img />
-        <h4>Person A</h4>
-        <p>Program</p>
-        <p>Year</p>
-        <p>Role</p>
-        <a href="#">GitHub</a>
-        <a href="#">Linkedin</a>
+        <div class="text-center">
+          <div alt="Caio Camatta Coelho" class="mx-auto rounded-circle profile-image mb-3" style="
+          background-image: url('/static/imgs/profile1.png');"></div>
+          <h4>Caio Camatta</h4>
+          <p class="my-1">Computer Science & SE</p>
+          <p class="my-1">Class of '22</p>
+          <p class="my-1 mb-2">Project Manager</p>
+          <a href="https://github.com/CaioCamatta" class="profile-icon mr-2"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/caio-coelho/" class="profile-icon"><i class="fab fa-linkedin"></i></a>
+        </div>
       </div>
       <div class="col">
-        <img />
-        <h4>Person A</h4>
-        <p>Program</p>
-        <p>Year</p>
-        <p>Role</p>
-        <a href="#">GitHub</a>
-        <a href="#">Linkedin</a>
+        <div class="text-center">
+          <div alt="Person" class="mx-auto rounded-circle profile-image mb-3" style="
+          background-image: url('/static/imgs/profile-default.jpg');"></div>
+          <h4>Renay Rahman</h4>
+          <p class="my-1">Integrated Science</p>
+          <p class="my-1">Class of '23</p>
+          <p class="my-1 mb-2">Developer</p>
+          <a href="#" class="profile-icon mr-2"><i class="fab fa-github"></i></a>
+          <a href="#" class="profile-icon"><i class="fab fa-linkedin"></i></a>
+        </div>
       </div>
       <div class="col">
-        <img />
-        <h4>Person A</h4>
-        <p>Program</p>
-        <p>Year</p>
-        <p>Role</p>
-        <a href="#">GitHub</a>
-        <a href="#">Linkedin</a>
+        <div class="text-center">
+          <div alt="Person" class="mx-auto rounded-circle profile-image mb-3" style="
+          background-image: url('/static/imgs/profile-default.jpg');"></div>
+          <h4>Walter Hasick</h4>
+          <p class="my-1">Computer Science & SE</p>
+          <p class="my-1">Class of '21</p>
+          <p class="my-1 mb-2">Mechatronics</p>
+          <a href="#" class="profile-icon mr-2"><i class="fab fa-github"></i></a>
+          <a href="#" class="profile-icon"><i class="fab fa-linkedin"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -162,7 +177,7 @@ endblock %} {% block main %}
   <div class="container text-center">
     <p class="mb-2">WesternAI Gideon Project Submission</p>
     <p class="mb-2">By Ben, Caio, Patric, Renay, Walter - 2020</p>
-    <a class="mb-2" href="">GitHub Repository</a>
+    <a class="mb-2" href="https://github.com/CaioCamatta/music-genre-recognition-Western-AI">GitHub Repository</a>
   </div>
 </footer>
 {% endblock %}
