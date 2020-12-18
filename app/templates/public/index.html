@@ -26,18 +26,48 @@ endblock %} {% block main %}
             id="audio_file"
             accept="audio/*"
           />
-          <label class="custom-file-label" for="image">Select .MP3 or .WAV file...</label>
+          <label class="custom-file-label" for="image"
+            >Select .MP3 or .WAV file...</label
+          >
         </div>
       </div>
 
       <button type="submit" class="btn btn-primary">Upload file</button>
     </form>
     <td></td>
-    {% if not error %}
-      {% if prediction %}
-    <p>According to our model, your song “{{filename}}” is a <b>{{ prediction }}</b> song!</p>
-      {% endif %}
-    {% else %}
+    {% if not error %} {% if input %}
+    <p>
+      According to our model, your song “{{filename}}” is a
+      <b>{{ prediction }}</b> song!
+      <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+      <script>
+        var tensorflow = (async function () {
+                console.log("Loading Tensorflow JS Model");
+                const model = await tf.loadLayersModel("/static/model.json");
+                const classes = [
+                  "blues",
+                  "classical",
+                  "country",
+                  "disco",
+                  "hiphop",
+                  "jazz",
+                  "metal",
+                  "pop",
+                  "reggae",
+                  "rock",
+                ];
+                console.log("Predicting");
+                const prediction = model
+                  .predict(
+                    tf.tensor({{input}})
+                  )
+                  .argMax()
+                  .dataSync()[0];
+                console.log(classes[prediction]);
+              })();
+      </script>
+    </p>
+    {% endif %} {% else %}
     <p>{{error}}</p>
     {% endif %}
   </div>
