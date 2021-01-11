@@ -20,24 +20,28 @@ scaler = load(open(os.path.join(dirname, 'static/scaler.pkl'), 'rb'))
 @app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        if request.files:
-            print(request.files)
-            audio_file = request.files["audio_file"]
+        try:
+            if request.files:
+                print(request.files)
+                audio_file = request.files["audio_file"]
 
-            if not isValidAudioFile(audio_file.filename):
-                print("That file is not valid")
-                return render_template('public/index.html', error="Please upload a valid file! Thanks.")
+                if not isValidAudioFile(audio_file.filename):
+                    print("That file is not valid")
+                    return render_template('public/index.html', error="Please upload a valid file! Thanks.")
 
-            filename = secure_filename(audio_file.filename)
-            audio_file.save(os.path.join(app.config["UPLOADS"], filename))
+                filename = secure_filename(audio_file.filename)
+                audio_file.save(os.path.join(app.config["UPLOADS"], filename))
 
-            file_path = os.path.join(app.config["UPLOADS"], filename)
-            
-            features = extractFeatures(file_path).tolist()
+                file_path = os.path.join(app.config["UPLOADS"], filename)
+                
+                features = extractFeatures(file_path).tolist()
 
-            return render_template('public/index.html', filename=filename, input=features)
+                return render_template('public/index.html', filename=filename, input=features)
 
-        return render_template('public/index.html', error="Please upload a valid file! Thanks.")
+            return render_template('public/index.html', error="Please upload a valid file! Thanks.")
+
+        except:
+            return render_template('public/index.html', error="Error processing your file.")
 
     return render_template("public/index.html")
 
