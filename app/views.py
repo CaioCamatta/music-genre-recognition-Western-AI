@@ -2,7 +2,10 @@ from app import app
 from flask import render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
-#import librosa
+import librosa
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from pickle import load
 #from sklearn import preprocessing
 #import python_speech_features as mfcc
 
@@ -11,6 +14,8 @@ uploads_folder = os.path.join(dirname, 'static/uploads')
 app.config["UPLOADS"] = uploads_folder
 app.config["ALLOWED_EXTENSIONS"] = ["MP3", "WAV", ]
 
+# define min max scaler
+scaler = load(open(os.path.join(dirname, 'static/scaler.pkl'), 'rb'))
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -26,13 +31,13 @@ def index():
             filename = secure_filename(audio_file.filename)
             audio_file.save(os.path.join(app.config["UPLOADS"], filename))
 
-        return render_template('public/index.html', filename=filename, input=[[3.49943221e-01,  1.78442045e+03,  2.00265019e+03,  3.80648532e+03,
-                                                                               8.30663910e-02, -1.13596748e+02,  1.21557297e+02, -1.91588268e+01,
-                                                                               4.23510284e+01, -6.37645817e+00,  1.86188755e+01, -1.36979122e+01,
-                                                                               1.53446312e+01, -1.22852669e+01,  1.09804916e+01, -8.32432461e+00,
-                                                                               8.81066894e+00, -3.66736817e+00,  5.75169086e+00, -5.16276264e+00,
-                                                                               7.50947773e-01, -1.69193780e+00, -4.09952581e-01, -2.30020881e+00,
-                                                                               1.21992850e+00]])
+            file_path = os.path.join(app.config["UPLOADS"], filename)
+            
+            features = extractFeatures(file_path).tolist()
+
+            return render_template('public/index.html', filename=filename, input=features)
+
+        return render_template('public/index.html', error="Please upload a valid file! Thanks.")
 
     return render_template("public/index.html")
 
@@ -44,3 +49,27 @@ def isValidAudioFile(filename):
         return True
     else:
         return False
+
+def extractFeatures(filename):
+    songname = filename
+    y, sr = librosa.load(songname, mono=True, duration=30)
+    chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
+    rmse = librosa.feature.rms(y=y)
+    spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
+    spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+    rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+    zcr = librosa.feature.zero_crossing_rate(y)
+    mfcc = librosa.feature.mfcc(y=y, sr=sr)
+    to_append = f'{np.mean(chroma_stft)} {np.mean(rmse)} {np.mean(spec_cent)} {np.mean(spec_bw)} {np.mean(rolloff)} {np.mean(zcr)}'    
+    for e in mfcc:
+        to_append += f' {np.mean(e)}'
+    
+    features = to_append.split()
+    del features[1]
+
+    features_array = np.array([features])
+
+    # transform data
+    scaled = scaler.transform(features_array)
+
+    return scaled.astype(np.double)
